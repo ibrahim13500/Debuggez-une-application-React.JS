@@ -1,31 +1,33 @@
 import { useEffect, useState } from "react";
 import { useData } from "../../contexts/DataContext";
 import { getMonth } from "../../helpers/Date";
+
 import "./style.scss";
 
 const Slider = () => {
   const { data } = useData();
   const [index, setIndex] = useState(0);
 
-  // Assurez-vous que data et data.focus sont définis et data.focus est un tableau
+  // Tri des événements par date de manière décroissante
   const byDateDesc = (data?.focus || []).sort((evtA, evtB) =>
-    new Date(evtA.date) < new Date(evtB.date) ? -1 : 1
+    new Date(evtA.date) > new Date(evtB.date) ? -1 : 1
   );
 
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-      setIndex((prevIndex) => (prevIndex + 1) % byDateDesc.length);
-    }, 5000);
+  // Fonction pour passer à l'image suivante
+  const nextCard = () => {
+    setTimeout(() => setIndex(index < byDateDesc.length - 1 ? index + 1 : 0), 5000);
+  };
 
-    // Nettoyage de l'intervalle lors du démontage du composant
-    return () => clearInterval(intervalId);
-  }, [byDateDesc.length]);
+  // Utilisation d'useEffect pour démarrer le changement d'image automatique
+  useEffect(() => {
+    nextCard();
+  }, [index, byDateDesc.length]); // Ajout des dépendances pour recalculer quand index ou la longueur changent
 
   return (
     <div className="SlideCardList">
-      {byDateDesc.map((event, idx) => (
+      {byDateDesc?.map((event, idx) => (
         <div
-          key={event.id || idx} // Utilisation d'un identifiant unique ou de l'index comme dernier recours
+          key={event.title} // Utilisation du titre comme clé, ce qui peut être problématique si les titres ne sont pas uniques
           className={`SlideCard SlideCard--${index === idx ? "display" : "hide"}`}
         >
           <img src={event.cover} alt="forum" />
@@ -40,9 +42,9 @@ const Slider = () => {
       ))}
       <div className="SlideCard__paginationContainer">
         <div className="SlideCard__pagination">
-          {byDateDesc.map((event, radioIdx) => (
+          {byDateDesc?.map((event, radioIdx) => (
             <input
-              key={event.id || radioIdx} // Utilisation de l'ID unique ou de l'index comme dernier recours
+              key={event.title} // Même remarque ici concernant l'unicité
               type="radio"
               name="radio-button"
               checked={index === radioIdx}
