@@ -1,50 +1,54 @@
-import { useState } from "react";
-import EventCard from "../../components/EventCard";
-import Select from "../../components/Select";
-import { useData } from "../../contexts/DataContext";
-import Modal from "../Modal";
-import ModalEvent from "../ModalEvent";
+import { useState } from 'react'
+import EventCard from '../../components/EventCard'
+import Select from '../../components/Select'
+import { useData } from '../../contexts/DataContext'
+import Modal from '../Modal'
+import ModalEvent from '../ModalEvent'
 
-import "./style.css";
+import './style.css'
 
-const PER_PAGE = 9;
+const PER_PAGE = 9
 
 const EventList = () => {
-  const { data, error } = useData();
-  const [type, setType] = useState();
-  const [currentPage, setCurrentPage] = useState(1);
-  const filteredEvents = (
-    (!type
-      ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  });
+  const { data, error } = useData()
+  const [type, setType] = useState()
+  const [currentPage, setCurrentPage] = useState(1)
+  const filteredEvents =
+    // Modification de la condition pour le filtre des événements : Si "type" n'est pas défini alors tous les événements sont récupérés (data.events). Si "type" est défini alors les événements pour lesquels event.type === type sont récupérés. Ceci corrige le bug de filtrage des événement.
+    (
+      (!type
+        ? data?.events
+        : data?.events.filter((event) => event.type === type)) || []
+    ).filter((event, index) => {
+      if (
+        (currentPage - 1) * PER_PAGE <= index &&
+        PER_PAGE * currentPage > index
+      ) {
+        return true
+      }
+      return false
+    })
+
   const changeType = (evtType) => {
-    setCurrentPage(1);
-    setType(evtType);
-  };
-  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1;
-  const typeList = new Set(data?.events.map((event) => event.type));
+    setCurrentPage(1)
+    setType(evtType)
+  }
+
+  const pageNumber = Math.floor((filteredEvents?.length || 0) / PER_PAGE) + 1
+  const typeList = new Set(data?.events.map((event) => event.type))
   return (
     <>
-      {error && <div>An error occured</div>}
+      {error && <div data-testid='error-message'>An error occured</div>}
       {data === null ? (
-        "loading"
+        'loading'
       ) : (
         <>
-          <h3 className="SelectTitle">Catégories</h3>
+          <h3 className='SelectTitle'>Catégories</h3>
           <Select
             selection={Array.from(typeList)}
             onChange={(value) => (value ? changeType(value) : changeType(null))}
           />
-          <div id="events" className="ListContainer">
+          <div id='events' className='ListContainer'>
             {filteredEvents.map((event) => (
               <Modal key={event.id} Content={<ModalEvent event={event} />}>
                 {({ setIsOpened }) => (
@@ -59,10 +63,10 @@ const EventList = () => {
               </Modal>
             ))}
           </div>
-          <div className="Pagination">
+          <div className='Pagination'>
             {[...Array(pageNumber || 0)].map((_, n) => (
               // eslint-disable-next-line react/no-array-index-key
-              <a key={n} href="#events" onClick={() => setCurrentPage(n + 1)}>
+              <a key={n} href='#events' onClick={() => setCurrentPage(n + 1)}>
                 {n + 1}
               </a>
             ))}
@@ -70,7 +74,7 @@ const EventList = () => {
         </>
       )}
     </>
-  );
-};
+  )
+}
 
-export default EventList;
+export default EventList
