@@ -143,16 +143,16 @@ const Page = () => {
           <div>01 23 45 67 89</div>
           <div>contact@724events.com</div>
           <div>
-            <a href='#twitch' data-testid='footer-social-icon-testid'>
+            <a href='#twitch' data-testid='footer-social-icon-testid'    aria-label="twitch">
               <Icon name='twitch' />
             </a>
-            <a href='#facebook' data-testid='footer-social-icon-testid'>
+            <a href='#facebook' data-testid='footer-social-icon-testid'   aria-label="facebook">
               <Icon name='facebook' />
             </a>
-            <a href='#twitter' data-testid='footer-social-icon-testid'>
+            <a href='#twitter' data-testid='footer-social-icon-testid'   aria-label="twitter">
               <Icon name='twitter' />
             </a>
-            <a href='#youtube' data-testid='footer-social-icon-testid'>
+            <a href='#youtube' data-testid='footer-social-icon-testid'   aria-label="youtube">
               <Icon name='youtube' />
             </a>
           </div>

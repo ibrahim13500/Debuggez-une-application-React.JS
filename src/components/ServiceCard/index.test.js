@@ -1,8 +1,9 @@
+import React from 'react';  // Ajoutez cette ligne
 import { render, screen } from "@testing-library/react";
 import ServiceCard from "./index";
 
 describe("When a service card is created", () => {
-  it("an image is display with alt value", () => {
+  it("an image is displayed with alt value", () => {
     render(
       <ServiceCard imageSrc="http://src-image" imageAlt="image-alt-text">{" "}</ServiceCard>
     );
@@ -10,6 +11,7 @@ describe("When a service card is created", () => {
     expect(imageElement).toBeInTheDocument();
     expect(imageElement.alt).toEqual("image-alt-text");
   });
+
   it("a content is displayed", () => {
     render(
       <ServiceCard imageSrc="http://src-image" imageAlt="image-alt-text">

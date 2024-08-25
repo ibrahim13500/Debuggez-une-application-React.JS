@@ -44,7 +44,13 @@
       "^.+\\.(js|jsx)$": "babel-jest"
     },
     "testEnvironment": "jsdom",
-    "moduleFileExtensions": ["js", "jsx"]
+    "moduleFileExtensions": [
+      "js",
+      "jsx"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|scss)$": "<rootDir>/src/mocks/styleMock.js"
+    }
   },
   "babel": {
     "presets": [
@@ -53,7 +59,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/preset-env": "^7.25.4",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-react": "^7.24.7",
     "babel-jest": "^29.7.0",
     "eslint": "^8.14.0",
@@ -64,6 +70,7 @@
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
     "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "^2.6.2"
   }
 }

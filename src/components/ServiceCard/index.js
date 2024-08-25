@@ -1,15 +1,21 @@
 import PropTypes from "prop-types";
-
 import "./style.scss";
 
-const ServiceCard = ({ imageSrc, imageAlt, children }) => (
-    <div className="ServiceCard">
-      <div className="ServiceCard__imageContainer">
-        <img data-testid="card-image-testid" src={imageSrc} alt={imageAlt} />
-      </div>
-      <div className="ServiceCard__textContainer">{children}</div>
+const ServiceCard = ({ imageSrc, imageAlt = "Image", children }) => (
+  <div className="ServiceCard">
+    <div className="ServiceCard__imageContainer">
+      <img
+        data-testid="card-image-testid"
+        src={imageSrc}
+        alt={imageAlt}
+        className="ServiceCard__image"
+      />
     </div>
-  );
+    <div className="ServiceCard__textContainer">
+      {children}
+    </div>
+  </div>
+);
 
 ServiceCard.propTypes = {
   imageSrc: PropTypes.string.isRequired,
@@ -17,8 +23,5 @@ ServiceCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-ServiceCard.defaultProps = {
-  imageAlt: "image"
-}
-
 export default ServiceCard;
+

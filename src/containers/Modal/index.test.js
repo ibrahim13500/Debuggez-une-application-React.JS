@@ -1,54 +1,54 @@
-/* eslint-disable react/self-closing-comp */
-/* eslint-disable react/button-has-type */
-/* eslint-disable jsx-a11y/control-has-associated-label */
 import { fireEvent, render, screen } from "@testing-library/react";
 import Modal from "./index";
 
-describe("When Modal data is created", () => {
-  it("a modal content is display", () => {
+describe("When Modal is rendered", () => {
+  it("displays the modal content when opened", () => {
     render(
       <Modal opened Content={<div>modal content</div>}>
         {() => null}
       </Modal>
     );
+    // Vérifie que le contenu du modal est affiché
     expect(screen.getByText("modal content")).toBeInTheDocument();
   });
-  describe("and a click is triggered to display the modal", () => {
-    it("the content of modal is displayed", async () => {
+
+  describe("and the open button is clicked", () => {
+    it("displays the content of the modal", () => {
       render(
         <Modal Content={<div>modal content</div>}>
-          {() => <button data-testid="open-modal"></button>}
+          {({ setIsOpened }) => (
+            <button data-testid="open-modal" onClick={() => setIsOpened(true)}>
+              Open Modal
+            </button>
+          )}
         </Modal>
       );
+      // Vérifie que le contenu du modal n'est pas affiché avant le clic
       expect(screen.queryByText("modal content")).not.toBeInTheDocument();
-      fireEvent(
-        screen.getByTestId("open-modal"),
-        new MouseEvent("click", {
-          cancelable: true,
-          bubbles: true,
-        })
-      );
 
+      // Simule un clic sur le bouton pour ouvrir le modal
+      fireEvent.click(screen.getByTestId("open-modal"));
+
+      // Vérifie que le contenu du modal est affiché après le clic
+      expect(screen.getByText("modal content")).toBeInTheDocument();
     });
   });
 
-  describe("and a click is triggered to the close button modal", () => {
-    it("the content of the modal is hide", async () => {
+  describe("and the close button is clicked", () => {
+    it("hides the content of the modal", () => {
       render(
         <Modal opened Content={<div>modal content</div>}>
           {() => null}
         </Modal>
       );
 
+      // Vérifie que le contenu du modal est affiché
       expect(screen.getByText("modal content")).toBeInTheDocument();
-      fireEvent(
-        screen.getByTestId("close-modal"),
-        new MouseEvent("click", {
-          cancelable: true,
-          bubbles: true,
-        })
-      );
 
+      // Simule un clic sur le bouton pour fermer le modal
+      fireEvent.click(screen.getByTestId("close-modal"));
+
+      // Vérifie que le contenu du modal n'est plus affiché après le clic
       expect(screen.queryByText("modal content")).not.toBeInTheDocument();
     });
   });
