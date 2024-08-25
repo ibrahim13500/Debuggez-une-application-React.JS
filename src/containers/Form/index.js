@@ -4,25 +4,35 @@ import Field, { FIELD_TYPES } from "../../components/Field";
 import Select from "../../components/Select";
 import Button, { BUTTON_TYPES } from "../../components/Button";
 
-const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 500); })
+const mockContactApi = () => new Promise((resolve) => {
+  setTimeout(() => {
+    resolve(); // Signale que la promesse est remplie après 500ms
+  }, 500);
+});
 
-const Form = ({ onSuccess ='null', onError='null' }) => {
+const Form = ({ onSuccess = () => null, onError = () => null }) => {
   const [sending, setSending] = useState(false);
+  const [messageSent, setMessageSent] = useState(false);
+
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+      setMessageSent(false);
+
       try {
         await mockContactApi();
-        setSending(false);
+        setMessageSent(true);
+        onSuccess();
       } catch (err) {
-        setSending(false);
         onError(err);
+      } finally {
+        setSending(false);
       }
     },
     [onSuccess, onError]
   );
+
   return (
     <form onSubmit={sendContact}>
       <div className="row">
@@ -49,6 +59,7 @@ const Form = ({ onSuccess ='null', onError='null' }) => {
           />
         </div>
       </div>
+      {messageSent && <p>Votre message a bien été transmis au service.</p>}
     </form>
   );
 };
@@ -57,6 +68,5 @@ Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
 }
-
 
 export default Form;
