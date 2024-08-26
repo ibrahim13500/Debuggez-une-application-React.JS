@@ -1,4 +1,6 @@
+import React from 'react'; // Add this import if using an older version of React
 import PropTypes from "prop-types";
+
 import "./style.scss";
 
 export const FIELD_TYPES = {
@@ -43,7 +45,7 @@ const Field = ({
         />
       );
   }
-  
+
   return (
     <div className="inputField">
       {label && <span>{label}</span>}

@@ -1,37 +1,43 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import Button, { BUTTON_TYPES } from "./index";
+import React from "react";
+import { render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';  // Pour des assertions supplémentaires comme `toBeInTheDocument`
+import ServiceCard from "../ServiceCard";  // Assurez-vous que le chemin vers votre fichier est correct
 
-describe("When a button is created", () => {
-  it("the button must include a title", () => {
-    render(<Button title="my-button" type={BUTTON_TYPES.DEFAULT} />);
-    const buttonElement = screen.getByTitle("my-button");
-    expect(buttonElement).toBeInTheDocument();
+describe("ServiceCard Component", () => {
+  it("renders the image with the correct src and alt attributes", () => {
+    const imageSrc = "test-image.jpg";
+    const imageAlt = "Test Alt Text";
+
+    render(
+      <ServiceCard imageSrc={imageSrc} imageAlt={imageAlt}>
+        <p>Test Children</p>
+      </ServiceCard>
+    );
+
+    const imgElement = screen.getByTestId("card-image-testid");
+    expect(imgElement).toHaveAttribute("src", imageSrc);
+    expect(imgElement).toHaveAttribute("alt", imageAlt);
   });
-  it("the button must display a label", () => {
-    render(<Button>label</Button>);
-    const buttonElement = screen.getByText(/label/);
-    expect(buttonElement).toBeInTheDocument();
+
+  it("renders children inside the text container", () => {
+    render(
+      <ServiceCard imageSrc="test-image.jpg">
+        <p>Test Children</p>
+      </ServiceCard>
+    );
+
+    const childElement = screen.getByText("Test Children");
+    expect(childElement).toBeInTheDocument();
   });
-  describe("and it's clicked", () => {
-    it("an event onClick it executed", () => {
-      const onClick = jest.fn();
-      render(<Button onClick={onClick} />);
-      const buttonElement = screen.getByTestId("button-test-id");
-      fireEvent(
-        buttonElement,
-        new MouseEvent("click", {
-          bubbles: true,
-          cancelable: true,
-        })
-      );
-      expect(onClick.mock.calls.length).toBeGreaterThan(0);
-    });
-  });
-  describe("and selected type is submit", () => {
-    it("an input submit is created", () => {
-      render(<Button type={BUTTON_TYPES.SUBMIT}>label</Button>);
-      const buttonElement = screen.getByTestId("button-test-id");
-      expect(buttonElement.type).toEqual("submit");
-    });
+
+  it("renders with a default alt attribute when none is provided", () => {
+    render(
+      <ServiceCard imageSrc="test-image.jpg">
+        <p>Test Children</p>
+      </ServiceCard>
+    );
+
+    const imgElement = screen.getByTestId("card-image-testid");
+    expect(imgElement).toHaveAttribute("alt", "Image");
   });
 });

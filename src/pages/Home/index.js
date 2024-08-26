@@ -1,3 +1,4 @@
+import React from 'react'
 import Menu from '../../containers/Menu'
 import ServiceCard from '../../components/ServiceCard'
 import EventCard from '../../components/EventCard'

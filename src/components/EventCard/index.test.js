@@ -1,6 +1,7 @@
+import React from "react";
 import { render, screen } from "@testing-library/react";
-import EventCard from "./index";
-
+import EventCard from "./index"; // Assurez-vous que le chemin est correct
+import "@testing-library/jest-dom"; // Pour toBeInTheDocument
 describe("When a event card is created", () => {
   it("an image is display with alt value", () => {
     render(<EventCard imageSrc="http://src-image" imageAlt="image-alt-text" date={new Date("2022-04-01")} 

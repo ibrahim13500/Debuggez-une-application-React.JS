@@ -1,4 +1,7 @@
+import React from 'react';
 import { fireEvent, render, screen } from "@testing-library/react";
+import '@testing-library/jest-dom';  // Import jest-dom to use toBeInTheDocument
+
 import Modal from "./index";
 
 describe("When Modal is rendered", () => {

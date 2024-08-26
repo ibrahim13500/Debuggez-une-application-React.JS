@@ -1,5 +1,6 @@
-import PropTypes from "prop-types";
+import React from 'react';  // Add this line at the top
 
+import PropTypes from "prop-types";
 import "./style.scss";
 
 export const BUTTON_TYPES = {
@@ -7,7 +8,14 @@ export const BUTTON_TYPES = {
   SUBMIT: 2,
 };
 
-const Button = ({ title, onClick, type, disabled, children }) => {
+// Définir les valeurs par défaut directement dans les paramètres de la fonction
+const Button = ({ 
+  title = "", 
+  onClick = () => null, 
+  type = BUTTON_TYPES.DEFAULT, 
+  disabled = false, 
+  children = null 
+}) => {
   switch (type) {
     case BUTTON_TYPES.DEFAULT:
       return (
@@ -50,7 +58,6 @@ const Button = ({ title, onClick, type, disabled, children }) => {
   }
 };
 
-// eslint-disable-next-line react/no-typos
 Button.propTypes = {
   title: PropTypes.string,
   onClick: PropTypes.func,
@@ -58,12 +65,5 @@ Button.propTypes = {
   disabled: PropTypes.bool,
   children: PropTypes.node,
 };
-Button.defaultProps = {
-  disabled: false,
-  onClick: () => null,
-  type: BUTTON_TYPES.DEFAULT,
-  title: "",
-  children: null
-}
 
 export default Button;

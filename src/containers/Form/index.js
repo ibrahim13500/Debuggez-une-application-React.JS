@@ -1,12 +1,13 @@
-import { useCallback, useState } from "react";
-import PropTypes from "prop-types";
-import Field, { FIELD_TYPES } from "../../components/Field";
-import Select from "../../components/Select";
-import Button, { BUTTON_TYPES } from "../../components/Button";
+import React, { useCallback, useState } from 'react'; // Combined import
+import PropTypes from 'prop-types';
+import Field, { FIELD_TYPES } from '../../components/Field';
+import Select from '../../components/Select';
+
+import Button, { BUTTON_TYPES } from '../../components/Button';
 
 const mockContactApi = () => new Promise((resolve) => {
   setTimeout(() => {
-    resolve(); // Signale que la promesse est remplie après 500ms
+    resolve(); // Resolve promise after 500ms
   }, 500);
 });
 
@@ -67,6 +68,6 @@ const Form = ({ onSuccess = () => null, onError = () => null }) => {
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
-}
+};
 
 export default Form;
