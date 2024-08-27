@@ -1,22 +1,15 @@
-import React from "react";
 import PropTypes from "prop-types";
+
 import "./style.scss";
 
-const ServiceCard = ({ imageSrc, imageAlt = "Image", children }) => (
-  <div className="ServiceCard">
-    <div className="ServiceCard__imageContainer">
-      <img
-        data-testid="card-image-testid"
-        src={imageSrc}
-        alt={imageAlt}
-        className="ServiceCard__image"
-      />
+const ServiceCard = ({ imageSrc, imageAlt, children }) => (
+    <div className="ServiceCard">
+      <div className="ServiceCard__imageContainer">
+        <img data-testid="card-image-testid" src={imageSrc} alt={imageAlt} />
+      </div>
+      <div className="ServiceCard__textContainer">{children}</div>
     </div>
-    <div className="ServiceCard__textContainer">
-      {children}
-    </div>
-  </div>
-);
+  );
 
 ServiceCard.propTypes = {
   imageSrc: PropTypes.string.isRequired,
@@ -24,5 +17,8 @@ ServiceCard.propTypes = {
   children: PropTypes.node.isRequired,
 };
 
-export default ServiceCard;
+ServiceCard.defaultProps = {
+  imageAlt: "image"
+}
 
+export default ServiceCard;

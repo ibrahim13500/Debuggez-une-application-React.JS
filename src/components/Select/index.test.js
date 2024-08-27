@@ -1,7 +1,5 @@
-import React from 'react';  // Ajoutez cette ligne
-import { render, screen, fireEvent } from '@testing-library/react';  // Importer fireEvent ici
-import '@testing-library/jest-dom';
-import Select from './index';
+import { fireEvent, render, screen } from "@testing-library/react";
+import Select from "./index";
 
 describe("When a select is created", () => {
   it("a list of choices is displayed", () => {
@@ -11,7 +9,6 @@ describe("When a select is created", () => {
     expect(selectElement).toBeInTheDocument();
     expect(selectDefault).toBeInTheDocument();
   });
-
   it("a collapse action button is displayed", () => {
     render(<Select selection={["value1", "value2"]} />);
     const collapseButtonElement = screen.getByTestId("collapse-button-testid");
@@ -26,31 +23,64 @@ describe("When a select is created", () => {
     });
   });
 
-  describe("and a click is triggered on the collapse button", () => {
+  describe("and a click is trigger on collapse button", () => {
     it("a list of values is displayed", () => {
       render(<Select selection={["value1", "value2"]} />);
-      const collapseButtonElement = screen.getByTestId("collapse-button-testid");
-      fireEvent.click(collapseButtonElement);  // Utilisez fireEvent.click ici
+      const collapseButtonElement = screen.getByTestId(
+        "collapse-button-testid"
+      );
+      fireEvent(
+        collapseButtonElement,
+        new MouseEvent("click", {
+          bubbles: true,
+          cancelable: true,
+        })
+      );
       const choice1 = screen.getByText("value1");
       const choice2 = screen.getByText("value2");
       expect(choice1).toBeInTheDocument();
       expect(choice2).toBeInTheDocument();
     });
-
     describe("and a click is triggered on a choice item", () => {
       it("a onChange callback is called", () => {
         const onChange = jest.fn();
         render(<Select selection={["value1", "value2"]} onChange={onChange} />);
-        const collapseButtonElement = screen.getByTestId("collapse-button-testid");
-        fireEvent.click(collapseButtonElement);  // Utilisez fireEvent.click ici
+        const collapseButtonElement = screen.getByTestId(
+          "collapse-button-testid"
+        );
+        fireEvent(
+          collapseButtonElement,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
         const choice1 = screen.getByText("value1");
-        fireEvent.click(choice1);  // Utilisez fireEvent.click ici
+        fireEvent(
+          choice1,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
         expect(onChange.mock.calls.length).toBeGreaterThan(0);
 
-        fireEvent.click(collapseButtonElement);  // Utilisez fireEvent.click ici
+        fireEvent(
+          collapseButtonElement,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
 
         const choiceAll = screen.getByText("Toutes");
-        fireEvent.click(choiceAll);  // Utilisez fireEvent.click ici
+        fireEvent(
+          choiceAll,
+          new MouseEvent("click", {
+            bubbles: true,
+            cancelable: true,
+          })
+        );
         expect(onChange.mock.calls.length).toBeGreaterThan(1);
       });
     });

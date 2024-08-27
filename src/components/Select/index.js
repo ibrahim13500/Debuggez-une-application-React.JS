@@ -1,20 +1,21 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import React, { useState } from "react";  // Single import for React and useState
+import { useState } from "react";
 import PropTypes from "prop-types";
+
 import "./style.scss";
 
 const Select = ({
   selection,
   onChange = () => {},
   name = "select",
-  titleEmpty =false,
-  label = "",
+  titleEmpty = false,
+  label ="",
   type = "normal",
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
-  
+
   const changeValue = (newValue) => {
     onChange(newValue);
     setValue(newValue);
@@ -53,7 +54,6 @@ const Select = ({
         <button
           type="button"
           data-testid="collapse-button-testid"
-          aria-label="open,close"
           className={collapsed ? "open" : "close"}
           onClick={(e) => {
             e.preventDefault();
@@ -91,5 +91,12 @@ Select.propTypes = {
   type: PropTypes.string,
 }
 
+Select.defaultProps = {
+  onChange: () => null,
+  titleEmpty: false,
+  label: "",
+  type: "normal",
+  name: "select",
+}
 
 export default Select;

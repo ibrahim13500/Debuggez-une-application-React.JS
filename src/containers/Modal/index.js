@@ -1,15 +1,10 @@
 import PropTypes from "prop-types";
-import React, { useState,useEffect } from 'react';
+import { useState } from "react";
 import Icon from "../../components/Icon";
 import "./style.scss";
 
-const Modal = ({ opened = false, Content, children }) => {
+const Modal = ({ opened, Content, children }) => {
   const [isOpened, setIsOpened] = useState(opened);
-
-  useEffect(() => {
-    setIsOpened(opened);
-  }, [opened]);
-
   return (
     <>
       {children({ isOpened, setIsOpened })}
@@ -19,7 +14,6 @@ const Modal = ({ opened = false, Content, children }) => {
             {Content}
             <button
               type="button"
-              aria-label="close modal"
               data-testid="close-modal"
               onClick={() => setIsOpened(false)}
             >
@@ -32,10 +26,14 @@ const Modal = ({ opened = false, Content, children }) => {
   );
 };
 
+Modal.defaultProps = {
+  opened: false,
+}
+
 Modal.propTypes = {
   opened: PropTypes.bool,
   Content: PropTypes.node.isRequired,
   children: PropTypes.func.isRequired,
-};
+}
 
 export default Modal;

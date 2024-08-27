@@ -1,6 +1,4 @@
-import React from 'react';
 import { fireEvent, render, screen } from "@testing-library/react";
-import '@testing-library/jest-dom';
 import Field, { FIELD_TYPES } from "./index";
 
 describe("When a field is created", () => {

@@ -1,33 +1,27 @@
-import React from 'react';  // Make sure this line is included
+/* eslint-disable no-return-assign */
 import Button from "../../components/Button";
 import Logo from "../../components/Logo";
 
 import "./style.scss";
 
-const Menu = () => {
-  const handleContactClick = () => {
-    window.document.location.hash = "#contact";
-  };
-
-  return (
-    <nav>
-      <Logo />
-      <ul>
-        <li>
-          <a href="#nos-services">Nos services</a>
-        </li>
-        <li>
-          <a href="#nos-realisations">Nos réalisations</a>
-        </li>
-        <li>
-          <a href="#notre-equipe">Notre équipe</a>
-        </li>
-      </ul>
-      <Button title="contact" onClick={handleContactClick}>
-        Contact
-      </Button>
-    </nav>
-  );
-};
+const Menu = () => (
+  <nav>
+    <Logo />
+    <ul>
+      <li>
+        <a href="#nos-services">Nos services</a>
+      </li>
+      <li>
+        <a href="#nos-realisations">Nos réalisations</a>
+      </li>
+      <li>
+        <a href="#notre-equipe">Notre équipe</a>
+      </li>
+    </ul>
+    <Button title="contact" onClick={() => (window.document.location.hash = "#contact")}>
+      Contact
+    </Button>
+  </nav>
+);
 
 export default Menu;
